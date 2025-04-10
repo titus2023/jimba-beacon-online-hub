@@ -1,12 +1,26 @@
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, Search, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ChevronDown, Search, User, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  // Handle scrolling effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,6 +31,14 @@ const Header = () => {
 
   const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+  
+  // Check if the path is active
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
   };
 
   const menuItems = [
@@ -61,14 +83,17 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className={`bg-white sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-md py-2' : 'py-4'}`}>
       {/* Top Bar */}
-      <div className="bg-school-primary text-white py-1">
-        <div className="container-custom flex justify-between items-center">
-          <p className="text-sm">Welcome to Jimba Gede Secondary School</p>
-          <div className="flex items-center space-x-4">
-            <a href="/contact" className="text-sm hover:text-school-light transition">Contact Us</a>
-            <a href="#" className="text-sm hover:text-school-light transition flex items-center gap-1">
+      <div className="bg-school-primary text-white py-2">
+        <div className="container-custom flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm mb-2 md:mb-0">Welcome to Jimba Gede Secondary School</p>
+          <div className="flex items-center space-x-6">
+            <a href="/contact" className="text-sm hover:underline transition flex items-center gap-1">
+              <Bell size={14} />
+              <span>Announcements</span>
+            </a>
+            <a href="/contact" className="text-sm hover:underline transition flex items-center gap-1">
               <User size={14} />
               <span>Portal Login</span>
             </a>
@@ -77,14 +102,14 @@ const Header = () => {
       </div>
       
       {/* Main Navigation */}
-      <div className="container-custom py-4">
+      <div className="container-custom">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="h-12 w-12 bg-school-secondary rounded-full flex items-center justify-center text-white font-bold">JG</div>
+          <Link to="/" className="flex items-center gap-3">
+            <div className="h-12 w-12 bg-gradient-to-br from-school-secondary to-school-accent rounded-lg flex items-center justify-center text-white font-bold shadow-md">JG</div>
             <div>
               <h1 className="font-bold text-xl text-school-primary">Jimba Gede</h1>
-              <p className="text-xs text-gray-600">Secondary School</p>
+              <p className="text-xs text-gray-500">Secondary School</p>
             </div>
           </Link>
 
@@ -94,7 +119,9 @@ const Header = () => {
               <div key={item.name} className="relative group">
                 {item.dropdown ? (
                   <button 
-                    className="px-3 py-2 text-gray-700 hover:text-school-primary font-medium flex items-center gap-1"
+                    className={`px-3 py-2 font-medium flex items-center gap-1 rounded-md transition-colors ${
+                      isActive(item.path) ? 'text-school-secondary' : 'text-gray-700 hover:text-school-secondary'
+                    }`}
                     onClick={() => toggleDropdown(item.name)}
                     aria-expanded={activeDropdown === item.name}
                   >
@@ -104,7 +131,9 @@ const Header = () => {
                 ) : (
                   <Link 
                     to={item.path} 
-                    className="px-3 py-2 text-gray-700 hover:text-school-primary font-medium"
+                    className={`px-3 py-2 font-medium rounded-md transition-colors ${
+                      isActive(item.path) ? 'text-school-secondary' : 'text-gray-700 hover:text-school-secondary'
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -132,19 +161,20 @@ const Header = () => {
               </div>
             ))}
             
-            <Button variant="outline" size="sm" className="ml-2">
+            <Button variant="ghost" size="sm" className="ml-2 text-gray-700">
               <Search size={16} />
+            </Button>
+            
+            <Button className="ml-4 bg-school-secondary hover:bg-school-accent">
+              Apply Now
             </Button>
           </nav>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 hover:text-school-primary focus:outline-none"
-            >
+            <Button variant="ghost" onClick={toggleMenu} className="p-1">
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -159,7 +189,9 @@ const Header = () => {
                       className="w-full text-left py-3 px-4 flex justify-between items-center"
                       onClick={() => toggleDropdown(item.name)}
                     >
-                      <span className="font-medium">{item.name}</span>
+                      <span className={`font-medium ${isActive(item.path) ? 'text-school-secondary' : ''}`}>
+                        {item.name}
+                      </span>
                       <ChevronDown 
                         size={16} 
                         className={`transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`} 
@@ -186,7 +218,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.path}
-                    className="block py-3 px-4 font-medium"
+                    className={`block py-3 px-4 font-medium ${isActive(item.path) ? 'text-school-secondary' : ''}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -194,8 +226,11 @@ const Header = () => {
                 )}
               </div>
             ))}
-            <div className="mt-4 px-4">
-              <Button className="w-full bg-school-primary hover:bg-school-secondary">
+            <div className="mt-4 px-4 flex flex-col space-y-2">
+              <Button className="w-full bg-school-secondary hover:bg-school-accent">
+                Apply Now
+              </Button>
+              <Button variant="outline" className="w-full">
                 Portal Login
               </Button>
             </div>

@@ -12,10 +12,12 @@ const About = () => {
   return (
     <Layout>
       <AboutHero />
-      <History />
-      <Vision />
-      <Leadership />
-      <Achievements />
+      <div className="container-custom py-12 md:py-16">
+        <History />
+        <Vision />
+        <Leadership />
+        <Achievements />
+      </div>
       <AboutCTA />
     </Layout>
   );
