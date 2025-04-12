@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Users, GraduationCap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -26,9 +27,11 @@ const Hero = () => {
               confident, innovative and responsible global citizens.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-white text-school-primary hover:bg-school-light transition-all duration-300 shadow-md">
-                Explore Programs
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button size="lg" asChild className="bg-white text-school-primary hover:bg-school-light transition-all duration-300 shadow-md">
+                <Link to="/academics">
+                  Explore Programs
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 transition-all duration-300">
                 Virtual Tour
@@ -63,19 +66,23 @@ const Hero = () => {
           
           <div className="flex justify-center">
             <div className="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl animate-fade-in">
-              {/* Placeholder for school image or graphic */}
-              <div className="aspect-[4/3] bg-gradient-to-br from-white/5 to-white/20 flex items-center justify-center">
-                <div className="text-white text-lg">School Image</div>
+              {/* Real school image */}
+              <div className="aspect-[4/3] bg-gradient-to-br from-white/5 to-white/20 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1581673213381-9f71525fae72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGFmcmljYW4lMjBzY2hvb2x8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" 
+                  alt="Students at Jimba Gede Secondary School" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="p-6 border-t border-white/10">
                 <h3 className="text-white text-xl font-bold mb-2">Excellence in Education</h3>
                 <p className="text-white/80 mb-4">
                   Our state-of-the-art facilities and dedicated faculty create the perfect environment for academic success.
                 </p>
-                <a href="/about" className="text-white flex items-center font-medium hover:text-school-light transition-colors">
+                <Link to="/about" className="text-white flex items-center font-medium hover:text-school-light transition-colors">
                   Discover our campus
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

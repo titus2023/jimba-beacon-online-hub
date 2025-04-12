@@ -1,15 +1,46 @@
 
 import { Button } from "@/components/ui/button";
-import { Camera, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Gallery = () => {
   const galleryItems = [
-    { type: 'image', title: 'School Campus', category: 'Facilities' },
-    { type: 'image', title: 'Science Fair', category: 'Events' },
-    { type: 'image', title: 'Sports Day', category: 'Sports' },
-    { type: 'video', title: 'Cultural Performance', category: 'Arts' },
-    { type: 'image', title: 'Graduation Ceremony', category: 'Events' },
-    { type: 'image', title: 'Library', category: 'Facilities' },
+    { 
+      type: 'image', 
+      title: 'School Campus', 
+      category: 'Facilities',
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2Nob29sJTIwY2FtcHVzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
+    },
+    { 
+      type: 'image', 
+      title: 'Science Fair', 
+      category: 'Events',
+      image: "https://images.unsplash.com/photo-1564979045531-fa386a275b27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNjaWVuY2UlMjBmYWlyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
+    },
+    { 
+      type: 'image', 
+      title: 'Sports Day', 
+      category: 'Sports',
+      image: "https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3BvcnRzJTIwZGF5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
+    },
+    { 
+      type: 'video', 
+      title: 'Cultural Performance', 
+      category: 'Arts',
+      image: "https://images.unsplash.com/photo-1571536802807-30aa857635f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZGFuY2UlMjBwZXJmb3JtYW5jZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+    },
+    { 
+      type: 'image', 
+      title: 'Graduation Ceremony', 
+      category: 'Events',
+      image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JhZHVhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+    },
+    { 
+      type: 'image', 
+      title: 'Library', 
+      category: 'Facilities',
+      image: "https://images.unsplash.com/photo-1568667256549-094345857637?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2Nob29sJTIwbGlicmFyeXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+    },
   ];
 
   return (
@@ -20,8 +51,8 @@ const Gallery = () => {
             <h2 className="heading-md mb-2">Our School Gallery</h2>
             <p className="text-gray-600">Capturing moments and memories from our school community.</p>
           </div>
-          <Button variant="outline" className="self-start md:self-auto">
-            View Full Gallery
+          <Button variant="outline" asChild className="self-start md:self-auto">
+            <Link to="/gallery">View Full Gallery</Link>
           </Button>
         </div>
 
@@ -31,12 +62,19 @@ const Gallery = () => {
               key={index}
               className="group relative overflow-hidden rounded-lg aspect-[4/3] bg-gray-100 cursor-pointer"
             >
-              {/* Placeholder for gallery images/videos */}
-              <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                {item.type === 'video' ? (
-                  <Play className="h-12 w-12 text-gray-400" />
-                ) : (
-                  <Camera className="h-12 w-12 text-gray-400" />
+              {/* Actual images for gallery */}
+              <div className="absolute inset-0">
+                <img 
+                  src={item.image} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover"
+                />
+                {item.type === 'video' && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-16 w-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center">
+                      <Play className="h-8 w-8 text-white" />
+                    </div>
+                  </div>
                 )}
               </div>
               

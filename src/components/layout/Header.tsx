@@ -22,6 +22,12 @@ const Header = () => {
     };
   }, []);
 
+  // Close dropdown and menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
+  }, [location.pathname]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     if (isMenuOpen) {
@@ -89,11 +95,11 @@ const Header = () => {
         <div className="container-custom flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm mb-2 md:mb-0">Welcome to Jimba Gede Secondary School</p>
           <div className="flex items-center space-x-6">
-            <a href="/contact" className="text-sm hover:underline transition flex items-center gap-1">
+            <Link to="/news" className="text-sm hover:underline transition flex items-center gap-1">
               <Bell size={14} />
               <span>Announcements</span>
-            </a>
-            <a href="/contact" className="text-sm hover:underline transition flex items-center gap-1">
+            </Link>
+            <a href="#" className="text-sm hover:underline transition flex items-center gap-1">
               <User size={14} />
               <span>Portal Login</span>
             </a>
@@ -165,8 +171,8 @@ const Header = () => {
               <Search size={16} />
             </Button>
             
-            <Button className="ml-4 bg-school-secondary hover:bg-school-accent">
-              Apply Now
+            <Button asChild className="ml-4 bg-school-secondary hover:bg-school-accent">
+              <Link to="/contact">Apply Now</Link>
             </Button>
           </nav>
 
@@ -227,11 +233,11 @@ const Header = () => {
               </div>
             ))}
             <div className="mt-4 px-4 flex flex-col space-y-2">
-              <Button className="w-full bg-school-secondary hover:bg-school-accent">
-                Apply Now
+              <Button asChild className="w-full bg-school-secondary hover:bg-school-accent">
+                <Link to="/contact">Apply Now</Link>
               </Button>
-              <Button variant="outline" className="w-full">
-                Portal Login
+              <Button variant="outline" asChild className="w-full">
+                <a href="#">Portal Login</a>
               </Button>
             </div>
           </nav>

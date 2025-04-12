@@ -32,9 +32,13 @@ const History = () => {
             </div>
           </div>
           <div className="bg-gray-100 rounded-lg overflow-hidden">
-            {/* Placeholder for historical images */}
-            <div className="aspect-[4/3] bg-gray-200 flex items-center justify-center">
-              <span className="text-gray-500 text-lg">School History Timeline</span>
+            {/* Historical image */}
+            <div className="aspect-[4/3] overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2Nob29sJTIwaGlzdG9yeXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                alt="Jimba Gede School Historical Photo"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="p-6">
               <div className="space-y-4">

@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AboutCTA = () => {
   return (
@@ -19,12 +20,16 @@ const AboutCTA = () => {
           programs, meet our teachers, and see our facilities firsthand.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button size="lg" className="bg-white text-school-primary hover:bg-school-light shadow-lg transition-all duration-300">
-            Schedule a Visit
-            <ArrowRight className="ml-2 h-4 w-4" />
+          <Button size="lg" asChild className="bg-white text-school-primary hover:bg-school-light shadow-lg transition-all duration-300">
+            <Link to="/contact">
+              Schedule a Visit
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
-          <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 transition-all duration-300">
-            Admission Process
+          <Button size="lg" variant="outline" asChild className="border-white text-white hover:bg-white/10 transition-all duration-300">
+            <Link to="/academics">
+              Admission Process
+            </Link>
           </Button>
         </div>
       </div>
